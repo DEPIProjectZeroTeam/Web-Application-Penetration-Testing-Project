@@ -1,6 +1,9 @@
 Security Vulnerability Report
 Introduction
 This report includes a series of high-severity security vulnerabilities discovered in the application at http://localhost:3000. These vulnerabilities range from SQL Injection, Cross-Site Scripting (XSS) to CSRF attacks, all of which can lead to unauthorized access to data or exploitation of the application in various malicious ways. A detailed explanation of each vulnerability is provided with proof of concept (PoC) steps and remediation recommendations.
+----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
 
 
 -----High Severity Findings:
@@ -25,7 +28,7 @@ Click "Login".
 You will be logged in as admin@juice-sh.op, which is the first record in the users table.
 
 Remediation: Implement input validation and use parameterized queries to prevent SQL injection.
-
+---------------------------------
 2. Stored XSS in Comment Field on Contact Page
 Severity: High
 
@@ -44,7 +47,7 @@ Choose a rating, complete the CAPTCHA, and click Submit.
 Visit About and Administration to observe the XSS alert.
 
 Remediation: Implement input validation and sanitize the comment field to block malicious JavaScript code.
-
+---------------------------------
 3. Business Logic Vulnerability in Adding Item to Basket
 Severity: High
 
@@ -63,7 +66,7 @@ Proceed to checkout.
 You will receive a negative amount in your account.
 
 Remediation: Implement input validation to reject negative quantities.
-
+---------------------------------
 4. SQL Injection to Retrieve All Users’ Data
 Severity: High
 
@@ -80,7 +83,7 @@ Change the value of the q parameter to test')) UNION SELECT id, email, password,
 All user data is displayed.
 
 Remediation: Validate and sanitize the q parameter to prevent SQL injection.
-
+---------------------------------
 5. Stored XSS in Email Field During Registration
 Severity: High
 
@@ -97,7 +100,7 @@ Intercept the packet and change the email parameter to user@domain.com<script>al
 The code is injected successfully. When logged in as admin and visiting the administration page, the alert will be triggered.
 
 Remediation: Validate and sanitize the email field to prevent script injection.
-
+---------------------------------
 6. File Upload Vulnerability (Incorrect File Type)
 Severity: High
 
@@ -116,7 +119,7 @@ Intercept the request and change the file extension to something else.
 The file is uploaded successfully.
 
 Remediation: Implement server-side validation to ensure only allowed file types are uploaded.
-
+---------------------------------
 7. CSRF Attack to Change User’s Password
 Severity: High
 
@@ -137,7 +140,7 @@ Modify the request to remove the current=password and observe a successful respo
 Find an injection point (e.g., XSS) to execute the password change automatically.
 
 Remediation: Use a CSRF token to prevent unauthorized password changes.
-
+---------------------------------
 8. CSRF Attack to Change User’s Username
 Severity: High
 
@@ -156,7 +159,7 @@ Capture the HTTP request using Burp Suite and send it to the repeater.
 Modify the request to execute a change of username.
 
 Remediation: Use CSRF tokens to prevent unauthorized username changes.
-
+---------------------------------
 9. Stored XSS in Adding Products to Website
 Severity: High
 
@@ -173,7 +176,7 @@ Send a POST request to http://localhost:3000/api/Products with the body containi
 Search for the product "xss" and observe the XSS alert being triggered.
 
 Remediation: Implement input validation and sanitization for product descriptions.
-
+---------------------------------
 10. Stored XSS in Last Login IP Page
 Severity: High
 
@@ -190,7 +193,7 @@ Send a request to save the login IP, adding a malicious payload in the header.
 Visit the Last Login IP page to trigger the XSS alert.
 
 Remediation: Sanitize and validate input related to login data.
-
+---------------------------------
 11. Registering User with Admin Role
 Severity: High
 
@@ -207,7 +210,7 @@ Intercept the request and add "rule": "admin" in the JSON body.
 A user with the admin role is successfully registered.
 
 Remediation: Ensure that only requests from trusted sources (e.g., localhost) can assign the "admin" role.
-
+---------------------------------
 12. Blind SSRF via Image URL Parameter
 Severity: High
 
@@ -226,6 +229,9 @@ The content is successfully downloaded to the server.
 Remediation: Validate input in the Image URL parameter to prevent SSRF attacks.
 
 ----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+
 
 -----Medium Severity Findings:
 
@@ -333,6 +339,9 @@ The attacker successfully guesses the correct answer.
 Remediation: Implement brute-force prevention techniques, such as blocking IP addresses after multiple failed attempts or adding a CAPTCHA to limit automated attempts.
 
 ----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+
 
 -----Low Severity Findings:
 
