@@ -259,7 +259,7 @@ Refresh the page.
 Now, you can access another user's basket.
 
 Remediation: Avoid storing sensitive data in session storage. Instead, rely on tokens to verify and secure the basket access.
-
+---------------------------------
 2. IDOR in Adding Items to Basket
 Rating: Medium
 
@@ -277,23 +277,17 @@ Intercept the request using Burp Suite.
 
 Observe the POST request:
 
-bash
-Copy
-Edit
 POST /api/BasketItems/ HTTP/1.1
 {"ProductId":6,"BasketId":"2","quantity":1}
 Modify the request body to add an item to another user's basket, e.g., change BasketId to 1:
 
-json
-Copy
-Edit
 {"ProductId":6,"BasketId":"1","quantity":1}
 Send the request.
 
 The item will be added to another user’s basket successfully.
 
 Remediation: Ensure that users can only add items to their own basket, validated by their token, not by the BasketId parameter.
-
+---------------------------------
 3. File Upload Larger than 100KB
 Rating: Medium
 
@@ -314,7 +308,7 @@ Choose a file with a size greater than 100KB.
 Upload the file, and it is successfully uploaded, bypassing client-side validation.
 
 Remediation: Implement server-side validation for file size, ensuring only files within the allowed size limit are uploaded.
-
+---------------------------------
 4. Brute Force of Security Question
 Rating: Medium
 
@@ -363,7 +357,7 @@ Press Enter.
 An alert box will pop up with the message "xss".
 
 Remediation: Implement input validation to sanitize user input in the search field to prevent script injection.
-
+---------------------------------
 2. Business Logic Vulnerability in Chatbot
 Rating: Low
 
@@ -382,7 +376,7 @@ Keep asking the chatbot, "Can I have a coupon code?".
 The bot will repeatedly provide a 10% coupon.
 
 Remediation: Prevent the chatbot from issuing coupons and apply validation to limit the number of discounts that can be requested.
-
+---------------------------------
 3. IDOR in Customer Feedback
 Rating: Low
 
@@ -398,9 +392,6 @@ Inspect the page.
 
 Remove the hidden attribute in the <input> tag:
 
-html
-Copy
-Edit
 <input _ngcontent-c23 hidden id="userId" type="text" class="ng-untouched ng-pristine ng-valid">
 Change the id to another user's ID.
 
@@ -411,7 +402,7 @@ Submit the feedback.
 The feedback is submitted as if you were another user.
 
 Remediation: Authenticate feedback submissions based on the user’s token, not hidden form inputs.
-
+---------------------------------
 4. Reflected XSS in Track Result ID Parameter
 Rating: Low
 
@@ -431,16 +422,13 @@ Click the truck icon to track the order.
 
 In the URL, modify the id parameter to:
 
-bash
-Copy
-Edit
 http://localhost:3000#/track-result?id=a0c9-c9272915cd5e11f5
 Inject the payload <iframe src="javascript:alert(xss)"> into the id parameter.
 
 Reload the page, and the XSS payload will trigger an alert box.
 
 Remediation: Sanitize the id parameter and all URL parameters to prevent script injection.
-
+---------------------------------
 5. Business Logic in Customer Feedback
 Rating: Low
 
@@ -463,7 +451,7 @@ Intercept the request and modify the rating parameter to 0.
 Submit the feedback with a zero rating.
 
 Remediation: Implement validation to ensure ratings are within the allowed range (1–5 stars).
-
+---------------------------------
 6. IDOR in Writing Reviews on Products
 Rating: Low
 
@@ -482,7 +470,7 @@ Submit the review.
 Intercept the request and modify the author field to another user’s email.
 
 Remediation: Authenticate reviews based on the user's token, not on passed parameters.
-
+---------------------------------
 7. Lack of Input Validation in Registration Form
 Rating: Low
 
@@ -505,7 +493,7 @@ Notice that the "passwords do not match" error does not appear.
 Submit the form and log in with the new password.
 
 Remediation: Implement input validation to ensure the "password" and "repeat password" fields match.
-
+---------------------------------
 8. Exposure of Backup package.json File
 Rating: Low
 
@@ -526,7 +514,7 @@ Modify the URL to http://localhost:3000/ftp/package.json.bak%2500.md to bypass t
 The file is downloaded.
 
 Remediation: Hide all files and restrict access to the file directory to prevent exposure.
-
+---------------------------------
 9. Exposure of Coupons File
 Rating: Low
 
@@ -547,7 +535,7 @@ Modify the URL to http://localhost:3000/ftp/coupons_2013.md.bak%2500 to bypass t
 The file is downloaded.
 
 Remediation: Hide all sensitive files and restrict access to the directory.
-
+---------------------------------
 10. Exposure of Suspicious Errors File
 Rating: Low
 
@@ -568,7 +556,7 @@ Modify the URL to http://localhost:3000/ftp/suspicious_errors.yml%2500.md to byp
 The file is downloaded.
 
 Remediation: Hide all files and make them inaccessible to unauthorized users.
-
+---------------------------------
 11. Exposure of Access Logs Files
 Rating: Low
 
@@ -585,7 +573,7 @@ Click on access.logs.date.
 The log file is downloaded.
 
 Remediation: Hide log files and restrict access to them.
-
+---------------------------------
 12. Bypassing Captcha in Feedback Form
 Rating: Low
 
@@ -604,7 +592,7 @@ Submit the feedback.
 Capture the request and send it multiple times with the same CAPTCHA ID.
 
 Remediation: Ensure that CAPTCHA IDs are hidden or validated on the server-side to prevent reuse.
-
+---------------------------------
 13. Open Redirect Vulnerability
 Rating: Low
 
@@ -616,9 +604,6 @@ Proof of Concept:
 
 Visit:
 
-bash
-Copy
-Edit
 http://localhost:3000/redirect?to=https://evil.com/?https://github.com/bkimminich/juice-shop
 You will be redirected to evil.com.
 
@@ -626,7 +611,9 @@ Remediation: Validate URLs and prevent redirection to untrusted external sites.
 
 
 
-
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
 
 
 
