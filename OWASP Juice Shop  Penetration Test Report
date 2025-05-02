@@ -1,1 +1,14 @@
+ Title: SQL injection in login form
+ Rating: High
+ URL: http://localhost:3000/#/login
+ Description:
+ Due to this vulnerability an attacker can log in as the admin without knowing either his user name or
+ password using SQL injection
+ Proof of Concept:
+ Step 1: visit http://localhost:3000/#/login
+ Step 2:  Enter   ' OR 1=1 --
+ in the username field
+ Step 3:  Enter anything in the password field
+ Step 4:  Click login
+ Step 5 : You are logged in as admin@juice-sh.op which is the first record in the users table
 
